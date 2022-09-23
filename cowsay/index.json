@@ -7,8 +7,7 @@
     "steps": [
       {
         "title": "Cowsay Lab",
-        "text": "cowsay.md",
-        "verify": "verify.sh"
+        "text": "cowsay.md"
       }
     ],
     "finish": {

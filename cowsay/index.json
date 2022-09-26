@@ -5,10 +5,12 @@
     "intro": {
       "text": "intro.md"
     },
-    "steps": {
+    "steps": [
+      {
         "title": "Cowsay Lab",
         "text": "cowsay.md"
       }
+    ]
   },
   "backend": {
     "imageid": "ubuntu"

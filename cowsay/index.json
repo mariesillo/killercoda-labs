@@ -1,18 +1,10 @@
 {
   "title": "Cowsay Lab",
   "details": {
-    "intro": {
-      "text": "cowsay.md"
-    },
-    "steps": [
-      {
+    "steps": {
         "title": "Cowsay Lab",
         "text": "cowsay.md"
       }
-    ],
-    "finish": {
-      "text": "cowsay.md"
-    }
   },
   "backend": {
     "imageid": "kubernetes-kubeadm-2nodes-ubuntu20.04"

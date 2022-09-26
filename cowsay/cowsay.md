@@ -29,67 +29,67 @@ Run the command below and then enter your username and password.
 
 Run a new Debian container in interactive mode, with name and hostname "cowsay" and start a bash session.
 
-```.term1
- docker run -it --name cowsay --hostname cowsay debian bash
 ```
+ docker run -it --name cowsay --hostname cowsay debian bash
+```{{exec}}
 
 Notice the prompt has changed. This means you are now inside your docker container and all changes you make here will not impact the main server.
 So in the next step, we will install cowsay and fortune packages in the container without modifying the server where it is running.
 
-```.term1
-apt-get update && apt-get install -y cowsay fortune
 ```
+apt-get update && apt-get install -y cowsay fortune
+```{{exec}}
 
 Now that we have modified the container installing the package we need, we can use the command below to genereta a random phrase and pipe it into the cowsay.
 
-```.term1
-/usr/games/fortune | /usr/games/cowsay
 ```
+/usr/games/fortune | /usr/games/cowsay
+```{{exec}}
 
 Then we run the below command to exit the container.
 
-```.term1
-exit
 ```
+exit
+```{{exec}}
 
 Once we have exited the container, the bash process we were on was terminated, you can verify the container status running:
 
-```bash
-docker ps -a
 ```
+docker ps -a
+```{{exec}}
 
 Note the container has stopped running. But we can also save the container with the changes made to run it again later.
 
 The following command will save the changes made in the cowsay container as image with the name `test/cowsayimage`.
 
-```.term1
-docker commit cowsay test/cowsayimage
 ```
+docker commit cowsay test/cowsayimage
+```{{exec}}
 
 After saving it, we can run now our new image and call the command `test/cowsayimage /usr/games/cowsay "Moo"` to generate the cow
 
-```.term1
-docker run test/cowsayimage /usr/games/cowsay "Moo"
 ```
+docker run test/cowsayimage /usr/games/cowsay "Moo"
+```{{exec}}
 
 In the next step, we are going to create the same image but based on a Dockerfile.
 
 This will help us create a new docker image automatically. But first, let's create a separate directory and create the Dockerfile in it.
 
-```.term1
+```
 mkdir cowsay &&
 cd cowsay &&
 touch Dockerfile
-```
+```{{exec}}
 
 Run the next command to add the content required in the Dockerfile.
 
-```.term1
+```
 echo "
 FROM debian
 
 RUN apt-get update && apt-get install -y cowsay fortune" > Dockerfile
-```
+```{{exec}}
 
 Please notice the two keywords in the Dockerfile: `FROM` and `RUN`.
 
@@ -99,18 +99,18 @@ Please notice the two keywords in the Dockerfile: `FROM` and `RUN`.
 
 Once we have our Dockerfile with the instructions to build our cowsay image, let's use the `docker build` command:
 
-```.term1
-docker build -t test/cowsay-dockerfile .
 ```
+docker build -t test/cowsay-dockerfile .
+```{{exec}}
 
 - `"-t"` flag indicates the tag to assign to this new created image.
 - `"."` is defining the context, here we are indicating docker to start the build in our current folder.
 
 Now that we have an image with cowsay package installed previously, we can use the below command to run `cowsay "Moo"`
 
-```.term1
-docker run test/cowsay-dockerfile /usr/games/cowsay "Moo"
 ```
+docker run test/cowsay-dockerfile /usr/games/cowsay "Moo"
+```{{exec}}
 
 But what If we would like to define the command to run in the conntainer previously without the need to add it in the command line?
 
@@ -119,45 +119,45 @@ shell script containing our actions to run.
 
 Create entrypoint.sh file which will check if any arguments are received to show as text in the cow, if not, it will use fortune to generate a random text.
 
-```.term1
+```
 echo '#!/bin/bash
 if [ $# -eq 0 ]; then
     /usr/games/fortune | /usr/games/cowsay
   else
     /usr/games/cowsay "$@"
 fi' > entrypoint.sh
-```
+```{{exec}}
 
 Add execution permissions to the shell script
 
-```.term1
-chmod +x entrypoint.sh
 ```
+chmod +x entrypoint.sh
+```{{exec}}
 
 Please notice that what we add to the entrypoint is executed inside the container, so we also need to copy the script to the container first, this is done with the COPY statement.
 
 Once copied we can add the ENTRYPOINT statement and run the `docker build` command.
 
-```.term1
+```
 echo 'FROM debian
 RUN apt-get update && apt-get install -y cowsay fortune
 COPY entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]' > Dockerfile
-```
+```{{exec}}
 
-```.term1
-docker build -t test/cowsay-dockerfile-entrypoint .
 ```
+docker build -t test/cowsay-dockerfile-entrypoint .
+```{{exec}}
 
 And run the cowsay image with and without parameters.
 
-```.term1
+```
 docker run -t test/cowsay-dockerfile-entrypoint
-```
+```{{exec}}
 
-```.term1
-docker run -t test/cowsay-dockerfile-entrypoint Hello
 ```
+docker run -t test/cowsay-dockerfile-entrypoint Hello
+```{{exec}}
 
 Finally, try the below cows.
 
@@ -169,8 +169,8 @@ Finally, try the below cows.
 
 Example:
 
-```.term1
-docker run -t test/cowsay-dockerfile-entrypoint -f tux Hello from container
 ```
+docker run -t test/cowsay-dockerfile-entrypoint -f tux Hello from container
+```{{exec}}
 
 All cows are loccated in `/usr/share/cowsay/cows`

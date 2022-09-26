@@ -1,0 +1,17 @@
+{
+  "title": "Docker Ports Lab",
+  "description": "Ports? Let's mapping",
+  "details": {
+    "intro": {
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "text": "ports.md"
+      }
+    ]
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}

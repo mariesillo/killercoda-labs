@@ -1,0 +1,17 @@
+{
+  "title": "Swarm Lab",
+  "description": "Working with stacks",
+  "details": {
+    "intro": {
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "text": "swarm.md"
+      }
+    ]
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}

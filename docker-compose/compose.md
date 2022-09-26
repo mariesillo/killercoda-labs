@@ -1,21 +1,12 @@
----
-layout: post
-title:  "Docker Compose Example Application"
-date:   2021-04-26
-tags: [Linux,operations]
-categories: other
----
-
-
 ## Compose sample application
 ### NGINX proxy with GO backend
 
 Lets clone our repo first:
 
-```.term1
+```
 git clone https://github.com/docker/awesome-compose.git
 cd awesome-compose/nginx-golang
-```
+```{{exec}}
 
 
 Project structure:
@@ -52,16 +43,16 @@ Make sure port 80 on the host is not already in use.
 Add version at the top of compose file
 
 
-```.term1
-sed -i '1s/^/version: "3"\n/' compose.yaml  
 ```
+sed -i '1s/^/version: "3"\n/' compose.yaml  
+```{{exec}}
 
 Start Services
 
 
-```.term1
-docker-compose -f compose.yaml up -d
 ```
+docker-compose -f compose.yaml up -d
+```{{exec}}
 Results:
 
 ```
@@ -82,9 +73,9 @@ Creating nginx-golang_frontend_1 ... done
 
 Listing containers must show two containers running and the port mapping as below:
 
-```.term1
-docker ps
 ```
+docker ps
+```{{exec}}
 
 Results:
 
@@ -97,9 +88,9 @@ CONTAINER ID        IMAGE                   COMMAND                  CREATED    
 
 After the application starts, navigate to `http://localhost:80` in your web browser or run:
 
-```.term1
-curl localhost:80
 ```
+curl localhost:80
+```{{exec}}
 Results:
 
 ```
@@ -122,9 +113,9 @@ Hello from Docker!
 
 Stop and remove the containers
 
-```.term1
-docker-compose down
 ```
+docker-compose down
+```{{exec}}
 Results:
 
 ```

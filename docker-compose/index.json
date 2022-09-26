@@ -1,13 +1,13 @@
 {
-  "title": "Cowsay Lab",
-  "description": "Let work with cowsay!",
+  "title": "Docker Compose Lab",
+  "description": "docker-compose stack",
   "details": {
     "intro": {
       "text": "intro.md"
     },
     "steps": [
       {
-        "text": "cowsay.md"
+        "text": "compose.md"
       }
     ]
   },

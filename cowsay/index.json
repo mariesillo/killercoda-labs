@@ -1,12 +1,16 @@
 {
   "title": "Cowsay Lab",
+  "description": "Let users copy or exec code blocks",
   "details": {
+    "intro": {
+      "text": "intro.md"
+    },
     "steps": {
         "title": "Cowsay Lab",
         "text": "cowsay.md"
       }
   },
   "backend": {
-    "imageid": "kubernetes-kubeadm-2nodes-ubuntu20.04"
+    "imageid": "ubuntu"
   }
 }

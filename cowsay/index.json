@@ -7,7 +7,6 @@
     },
     "steps": [
       {
-        "title": "Cowsay Lab",
         "text": "cowsay.md"
       }
     ]

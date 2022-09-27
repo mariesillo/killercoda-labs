@@ -4,8 +4,8 @@
 Lets clone our repo first:
 
 ```
-git clone https://github.com/docker/awesome-compose.git
-cd awesome-compose/nginx-golang
+git clone https://github.com/mariesillo/nginx-golang.git
+cd nginx-golang
 ```{{exec}}
 
 
@@ -39,13 +39,6 @@ When deploying the application, docker-compose maps port 80 of the frontend serv
 Make sure port 80 on the host is not already in use.
 
 ## Deploy with docker-compose
-
-Add version at the top of compose file
-
-
-```
-sed -i '1s/^/version: "3"\n/' compose.yaml  
-```{{exec}}
 
 Start Services
 
@@ -109,7 +102,7 @@ $ curl localhost:80
 Hello from Docker!
 ```
 
-[Golang Application](/){:data-term=".term1"}{:data-port="80"}
+[Golang Application]({{TRAFFIC_HOST1_80}})
 
 Stop and remove the containers
 

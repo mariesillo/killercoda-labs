@@ -24,15 +24,24 @@ Project structure:
 
 compose.yaml
 ```
+version: "3.7"
 services:
-  frontend:
-    build: frontend
+  proxy:
+    image: nginx
+    volumes:
+      - type: bind
+        source: ./proxy/nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+        read_only: true
     ports:
       - 80:80
     depends_on:
       - backend
+
   backend:
-    build: backend
+    build:
+      context: backend
+      target: builder
 ```
 The compose file defines an application with two services `frontend` and `backend`.
 When deploying the application, docker-compose maps port 80 of the frontend service container to the same port of the host as specified in the file.
@@ -67,13 +76,13 @@ Creating nginx-golang_frontend_1 ... done
 Listing containers must show two containers running and the port mapping as below:
 
 ```
-docker ps
+docker-compose -f compose.yaml ps
 ```{{exec}}
 
 Results:
 
 ```
-$ docker ps
+$ docker-compose -f compose.yaml ps
 CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS                  NAMES
 8bd5b0d78e73        nginx-golang_frontend   "nginx -g 'daemon of…"   53 seconds ago      Up 52 seconds       0.0.0.0:80->80/tcp     nginx-golang_frontend_1
 56f929c240a0        nginx-golang_backend    "/usr/local/bin/back…"   53 seconds ago      Up 53 seconds                              nginx-golang_backend_1
@@ -107,7 +116,7 @@ Hello from Docker!
 Stop and remove the containers
 
 ```
-docker-compose down
+docker-compose -f compose.yaml down
 ```{{exec}}
 Results:
 

@@ -1,0 +1,17 @@
+{
+  "title": "Docker Volumes Lab",
+  "description": "Persistence, Persistence, Persistence",
+  "details": {
+    "intro": {
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "text": "volumes.md"
+      }
+    ]
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}

@@ -1,0 +1,101 @@
+#Namespace
+apiVersion: project.openshift.io/v1
+kind: Project
+metadata:
+  name: lab2
+---
+#Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: lab2
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql/mysql-server:5.7
+        name: mysql
+        livenessProbe:
+          tcpSocket:
+            port: 3306
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          timeoutSeconds: 10
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: mysqlserver
+              key: mysql_root_password
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: mysqlserver
+              key: mysql_user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: mysqlserver
+              key: mysql_password
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mysqlserver
+              key: mysql_database
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+           claimName: mysql-pv-claim
+---
+#PersistentVolumeClaim
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: mysql-pv-claim
+ namespace: lab2
+ annotations:
+   volume.beta.kubernetes.io/storage-class: "nfs-provisioner"
+spec:
+ accessModes:
+   - ReadWriteOnce
+ resources:
+   requests:
+     storage: 1Gi
+---
+#Service
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: mysql
+#   namespace: lab2
+# spec:
+#   ports:
+#   - port: 3306
+#     protocol: TCP
+#   selector:
+#     app: mysql
+#   type: ClusterIP
+---
+#ConfigMap
+apiVersion: v1
+data:
+  mysql_root_passw0rd: "root-p4ssw0rd"
+  mysql_user: "user1"
+  mysql_password: "user1-p4ssw0rd"
+  mysql_database: "test"
+kind: ConfigMap
+metadata:
+  name: mysqlserver
+  namespace: lab2

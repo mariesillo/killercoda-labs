@@ -1,0 +1,51 @@
+#Namespace
+apiVersion: project.openshift.io/v1
+kind: Project
+metadata:
+  name: lab1
+---
+#Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: open-liberty
+  name: open-liberty
+  namespace: lab1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: open-liberty
+  template:
+    metadata:
+      labels:
+        app: open-liberty
+    spec:
+      containers:
+      - image: open-liberty:newest
+        imagePullPolicy: Always
+        name: open-liberty
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+---
+#Service
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: open-liberty
+  name: open-liberty
+  namespace: lab1
+spec:
+  ports:
+  - port: 9080
+    protocol: TCP
+    targetPort: 9090
+  selector:
+    app: open-liberty
+  sessionAffinity: None
+  type: ClusterIP
